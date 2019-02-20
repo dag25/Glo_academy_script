@@ -11,7 +11,6 @@ window.addEventListener('DOMContentLoaded', () => {
       titles = document.querySelectorAll('.goods__title'),
       empty = cartWrapper.querySelector('.empty');
 
-
 	/**
 	 *открываем корзину
 	 *
