@@ -8,7 +8,9 @@ window.addEventListener('DOMContentLoaded', () => {
 		confirm = document.querySelector('.confirm'),
 		badge = document.querySelector('.nav__badge'),
 		totalCost = document.querySelector('.cart__total > span'),
-		titles = document.querySelectorAll('.goods__title');
+      titles = document.querySelectorAll('.goods__title'),
+      empty = cartWrapper.querySelector('.empty');
+
 
 	/**
 	 *открываем корзину
@@ -33,8 +35,8 @@ window.addEventListener('DOMContentLoaded', () => {
 		btn.addEventListener('click', function() {
 			let item = products[i].cloneNode(true),
 				trigger = item.querySelector('button'),
-				removeBtn = document.createElement('div'),
-				empty = cartWrapper.querySelector('.empty');
+				removeBtn = document.createElement('div');
+				
 			trigger.remove();
 			showConfirm();
 			calcGoods(1);
@@ -44,10 +46,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 			item.appendChild(removeBtn);
 			cartWrapper.appendChild(item);
-			//  убираем надпись в корзине
-			if (empty) {
-				empty.style.display = 'none';
-			}
+         
 
 			calcTotal(); // подсчет суммы
 			removeFromCart(); //  вызов функция удаления карточки
@@ -97,9 +96,17 @@ window.addEventListener('DOMContentLoaded', () => {
 	 * @param {*} i значение
 	 */
 	function calcGoods(i) {
-		const items = cartWrapper.querySelectorAll('.goods__item');
-		badge.textContent = i + items.length;
-	}
+      const items = cartWrapper.querySelectorAll('.goods__item');                     
+      badge.textContent = i + items.length;  
+      // удаление надписи в корзине
+      if (items.length === 0) {
+         empty.style.display = 'block';
+      } else {
+         empty.style.display = 'none';
+      }
+
+   }
+   
 	/**
 	 *функция подсчета всей суммы
 	 *
@@ -124,11 +131,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		removeBtn.forEach(function(btn) {
 			btn.addEventListener('click', () => {
-				btn.parentElement.remove(); //удаление родителя
-
+            btn.parentElement.remove(); //удаление родителя
+                        
 				calcGoods(0); // уменьшение бейджа в корзине
-				calcTotal(); //уменьшение суммы
+            calcTotal(); //уменьшение суммы
+            
+            
 			});
 		});
 	}
 });
+
